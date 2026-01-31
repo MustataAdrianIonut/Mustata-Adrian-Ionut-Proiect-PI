@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nutri App</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">
+        <div class="logo">🍽️</div>
+        <div>
+          <h1>Nutri App</h1>
+          <p class="muted"></p>
+        </div>
+      </div>
+
+      <nav class="tabs" id="navTabs">
+        <button class="tab active" data-tab="login" id="tabBtnLogin">Login</button>
+
+        <!--User-->
+        <button class="tab" data-tab="profile" id="tabBtnProfile">Profile</button>
+        <button class="tab" data-tab="foods" id="tabBtnFoods">Foods</button>
+        <button class="tab" data-tab="meals" id="tabBtnMeals">Meals</button>
+        <button class="tab" data-tab="plan" id="tabBtnPlan">Meal Plan</button>
+
+        <!--Admin-->
+        <button class="tab" data-tab="admin" id="tabBtnAdmin">Admin</button>
+
+
+        <button class="tab danger" id="tabBtnLogout">Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="panel active" id="tab-login">
+      <div class="grid two">
+        <div class="card">
+          <h2>User</h2>
+          <p class="muted">
+            Intră ca utilizator. Dacă nu ai cont, îl creezi aici și vei fi logat automat.
+          </p>
+
+          <div class="actions">
+            <button class="btn" id="btnHaveAccount">Am cont</button>
+            <button class="btn ghost" id="btnNoAccount">Nu am cont</button>
+          </div>
+
+          <div id="userLoginBox" class="subbox" style="display:none;">
+            <div class="form-row">
+              <label>Nume</label>
+              <input id="login_name" type="text" placeholder="Alex" />
+            </div>
+            <div class="actions">
+              <button class="btn" id="btnUserLogin">Login</button>
+            </div>
+            <div class="result" id="loginResult"></div>
+          </div>
+
+          <div id="userSignupBox" class="subbox" style="display:none;">
+            <h3>Create account</h3>
+
+            <div class="grid two">
+              <div class="form-row">
+                <label>Name</label>
+                <input id="u_name" type="text" placeholder="Alex" />
+              </div>
+
+              <div class="form-row">
+                <label>Sex</label>
+                <select id="u_sex">
+                  <option value="m">m</option>
+                  <option value="f">f</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label>Age</label>
+                <input id="u_age" type="number" value="25" />
+              </div>
+
+              <div class="form-row">
+                <label>Weight (kg)</label>
+                <input id="u_weight" type="number" value="60" />
+              </div>
+
+              <div class="form-row">
+                <label>Height (cm)</label>
+                <input id="u_height" type="number" value="165" />
+              </div>
+
+              <div class="form-row">
+                <label>Activity</label>
+                <select id="u_activity">
+                  <option value="deloc">deloc</option>
+                  <option value="usor">usor</option>
+                  <option value="moderat" selected>moderat</option>
+                  <option value="intens">intens</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label>Goal</label>
+                <select id="u_goal">
+                  <option value="slabit">slabit</option>
+                  <option value="masa">masa</option>
+                  <option value="mentinere" selected>mentinere</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn" id="btnCreateUser">Create & Login</button>
+            </div>
+
+            <div class="result" id="usersResult"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Admin</h2>
+          <p class="muted">Intră cu parolă ca să gestionezi utilizatori și alimente.</p>
+
+          <div class="form-row">
+            <label>Admin password</label>
+            <input id="admin_password" type="password" placeholder="admin123" />
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="btnAdminLogin">Login Admin</button>
+          </div>
+
+          <div class="result" id="adminResult"></div>
+
+          <div class="note">
+            <div class="note-title">Tip</div>
+            <div class="note-text">
+              Pentru planul alimentar: la Admin → Foods setezi „Meal type” (breakfast/lunch/dinner).
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--profil-->
+    <section class="panel" id="tab-profile">
+      <div class="grid two">
+        <div class="card">
+          <h2>My profile</h2>
+          <p class="muted">Datele tale (după login).</p>
+          <div class="actions">
+            <button class="btn" id="btnShowMe">Show my user</button>
+          </div>
+          <div class="result" id="meUserResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Calories & Daily summary</h2>
+          <p class="muted">Calcul automat pe baza profilului. Summary include mesele consumate.</p>
+          <div class="actions">
+            <button class="btn" id="btnUserCalories">Get calories</button>
+            <button class="btn ghost" id="btnUserSummary">Daily summary</button>
+          </div>
+          <div class="result" id="caloriesResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <!--foods-->
+    <section class="panel" id="tab-foods">
+      <div class="card">
+        <h2>Foods</h2>
+        <p class="muted">Lista alimentelor disponibile (create de Admin).</p>
+        <div class="actions">
+          <button class="btn" id="btnLoadFoods">Load foods</button>
+        </div>
+        <div class="result" id="foodsList"></div>
+        <div class="result" id="foodsResult"></div>
+      </div>
+    </section>
+
+    <!--meals-->
+    <section class="panel" id="tab-meals">
+      <div class="grid two">
+        <div class="card">
+          <h2>Add meal</h2>
+          <p class="muted">Adaugi o masă: alegi food_id și grams.</p>
+
+          <div class="grid two">
+            <div class="form-row">
+              <label>Food ID</label>
+              <input id="m_food_id" type="number" placeholder="1" />
+            </div>
+            <div class="form-row">
+              <label>Grams</label>
+              <input id="m_grams" type="number" value="150" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="btnAddMeal">Add meal</button>
+            <button class="btn ghost" id="btnListMeals">List my meals</button>
+          </div>
+
+          <div class="result" id="mealsResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Meal summary</h2>
+          <p class="muted">Dă un meal_id și vezi macros.</p>
+
+          <div class="form-row">
+            <label>Meal ID</label>
+            <input id="ms_meal_id" type="number" placeholder="1" />
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="btnMealSummary">Get summary</button>
+          </div>
+
+          <div class="result" id="mealSummaryResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <!--plan-->
+    <section class="panel" id="tab-plan">
+      <div class="card">
+        <h2>Meal plan</h2>
+        <p class="muted">
+          Generează plan alimentar.
+        </p>
+        <div class="actions">
+          <button class="btn" id="btnPlan">Generate plan</button>
+        </div>
+        <div class="result" id="planResult"></div>
+      </div>
+    </section>
+
+    <!--admin-->
+    <section class="panel" id="tab-admin">
+      <div class="grid two">
+        <div class="card">
+          <h2>Admin: Users</h2>
+          <p class="muted">Load users (doar admin).</p>
+          <div class="actions">
+            <button class="btn" id="btnAdminLoadUsers">Load users</button>
+          </div>
+          <div class="result" id="adminUsersResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Admin: Foods</h2>
+          <p class="muted">Creezi foods aici .</p>
+
+          <div class="grid two">
+            <div class="form-row">
+              <label>Name</label>
+              <input id="af_name" type="text" placeholder="Orez" />
+            </div>
+
+            <div class="form-row">
+              <label>Meal type</label>
+              <select id="af_meal_type">
+                <option value="breakfast">breakfast</option>
+                <option value="lunch" selected>lunch</option>
+                <option value="dinner">dinner</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label>kcal / 100g</label>
+              <input id="af_kcal" type="number" value="130" />
+            </div>
+            <div class="form-row">
+              <label>Protein / 100g</label>
+              <input id="af_protein" type="number" value="2.7" step="0.1" />
+            </div>
+            <div class="form-row">
+              <label>Fat / 100g</label>
+              <input id="af_fat" type="number" value="0.3" step="0.1" />
+            </div>
+            <div class="form-row">
+              <label>Carb / 100g</label>
+              <input id="af_carb" type="number" value="28" step="0.1" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="btnAdminAddFood">Add food</button>
+            <button class="btn ghost" id="btnAdminLoadFoods">Load foods</button>
+          </div>
+
+          <div class="result" id="adminFoodResult"></div>
+          <div class="result" id="adminFoodsResult"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container muted">
+      Swagger: <a href="/docs" target="_blank">/docs</a>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
